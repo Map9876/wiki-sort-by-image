@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki 图片查询</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wiki 图片查询工具</h1>
+        
+        <div class="info-bar">
+            <span>当前UTC时间: <time id="currentUTC">2025-02-12 23:59:03</time></span>
+            <span>用户: <span id="currentUser">map987654</span></span>
+        </div>
+
+        <form id="searchForm">
+            <div class="form-group">
+                <label for="wikiUrl">Wiki URL:</label>
+                <input type="url" 
+                       id="wikiUrl" 
+                       name="wikiUrl" 
+                       value="https://zh.minecraft.wiki"
+                       placeholder="例如: https://zh.minecraft.wiki"
+                       required>
+                <small class="help-text">输入Wiki的基础URL，带不带结尾的/都可以</small>
+            </div>
+
+            <div class="form-group">
+                <label for="aisort">排序方式:</label>
+                <select id="aisort" name="aisort">
+                    <option value="name">名称</option>
+                    <option value="timestamp">时间戳</option>
+                </select>
+            </div>
+
+            <div class="form-group timestamp-dependent">
+                <label for="aistart">起始时间 (UTC):</label>
+                <input type="datetime-local" 
+                       id="aistart" 
+                       name="aistart" 
+                       step="1"
+                       disabled>
+                <small class="help-text">只能与时间戳排序一起使用</small>
+            </div>
+
+            <div class="form-group">
+                <label for="aidir">排序方向:</label>
+                <select id="aidir" name="aidir">
+                    <option value="ascending">升序</option>
+                    <option value="descending">降序</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ailimit">返回数量:</label>
+                <input type="number" 
+                       id="ailimit" 
+                       name="ailimit" 
+                       min="1" 
+                       max="500" 
+                       value="10">
+            </div>
+
+            <div class="form-group">
+                <label for="aiminsize">最小文件大小 (字节):</label>
+                <input type="number" 
+                       id="aiminsize" 
+                       name="aiminsize" 
+                       min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="aimaxsize">最大文件大小 (字节):</label>
+                <input type="number" 
+                       id="aimaxsize" 
+                       name="aimaxsize" 
+                       min="0">
+            </div>
+
+            <div class="form-group timestamp-dependent">
+                <label for="aiuser">上传用户:</label>
+                <input type="text" 
+                       id="aiuser" 
+                       name="aiuser" 
+                       disabled>
+                <small class="help-text">只能与时间戳排序一起使用</small>
+            </div>
+
+            <div class="form-group">
+                <label for="aimime">MIME类型:</label>
+                <input type="text" 
+                       id="aimime" 
+                       name="aimime" 
+                       placeholder="例如: image/jpeg">
+            </div>
+
+            <button type="submit" class="search-button">查询</button>
+        </form>
+
+        <div id="apiUrlDisplay" class="api-url-container">
+            <h3>当前API请求URL:</h3>
+            <div class="api-url-wrapper">
+                <a id="apiUrlLink" href="#" target="_blank"></a>
+                <button id="copyUrlBtn" title="复制URL">📋</button>
+            </div>
+        </div>
+
+        <div id="results">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>缩略图</th>
+                        <th>文件名</th>
+                        <th>上传时间</th>
+                        <th>上传用户</th>
+                     <th class="sortable" id="sizeHeader">
+                            大小
+                            <span class="sort-arrow">↕️</span>
+                        </th>
+                        <th>尺寸</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+              </html>
